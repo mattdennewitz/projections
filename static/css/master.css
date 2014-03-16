@@ -1,0 +1,9 @@
+body {
+    font-family: "Roboto";
+}
+
+.kept {
+    transition: opacity 100ms;
+
+    opacity: 0.2;
+}

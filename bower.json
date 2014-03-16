@@ -1,0 +1,16 @@
+{
+  "name": "dpf2014",
+  "version": "0.0.0",
+  "authors": [
+    "Matt Dennewitz <mattdennewitz@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
