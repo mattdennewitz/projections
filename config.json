@@ -1,0 +1,30 @@
+{
+    "projections": [
+        {
+            "name": "zips",
+            "types": {
+                "batting": {
+                    "weight": 1,
+                    "path": "data/zips-batting.csv"
+                },
+                "pitching": {
+                    "weight": 1,
+                    "path": "data/zips-pitching.csv"
+                }
+            }
+        },
+        {
+            "name": "steamer",
+            "types": {
+                "batting": {
+                    "weight": 1,
+                    "path": "data/steamer-batting.csv"                
+                },
+                "pitching": {
+                    "weight": 1,
+                    "path": "data/steamer-pitching.csv"
+                }
+            }
+        }
+    ]
+}

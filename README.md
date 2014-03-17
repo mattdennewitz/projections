@@ -1,12 +1,8 @@
-django-project-skeleton
-=======================
+# Projections
 
-Django project skeleton. Targeted for 1.6+.
+Import and visualize projections
 
-## Usage
+## Data
 
-    django-admin.py startproject <project name> --template=https://github.com/pitchfork/django-project-skeleton/zipball/master .
-    
-e.g.,
-
-    django-admin.py startproject pitchfork --template=https://github.com/pitchfork/django-project-skeleton/zipball/master .
+... comes from FanGraphs. Here, I average each component across
+each projection system - 50/50, no weighting.
