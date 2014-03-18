@@ -1,0 +1,73 @@
+with
+
+{# global batting stats #}
+{% if batting %}
+gbatting as (
+    select
+
+{% for component in batting %}
+        avg("{{ component }}")      {{ component }}_a,
+        stddev("{{ component }}")   {{ component }}_s{% if not loop.last %},{% endif %}
+{% endfor %}
+    from projections_batting
+)
+{% endif %}
+
+{% if batting and pitching %},{% endif %}
+
+{# global pitching stats #}
+{% if pitching %}
+  gpitching as (
+    select
+{% for component in pitching %}
+        avg("{{ component }}")      {{ component }}_a,
+        stddev("{{ component }}")   {{ component }}_s{% if not loop.last %},{% endif %}
+{% endfor %}
+    from projections_pitching
+)
+{% endif %}
+
+select * from (
+
+{# batting stats selection #}
+{% if batting %}
+select
+    name,
+    {# sum all z-scores #}
+    ({% for component in batting %}{{ component }}_z {% if not loop.last %} + {% endif %}{% endfor %}) z_sum
+from (
+    select
+        playerid, name,
+
+{% for component in batting %}
+        ("{{ component }}" - "{{ component }}_a") / "{{ component }}_s" {{ component }}_z {% if not loop.last %},{% endif %}
+{% endfor %}
+    from projections_batting, gbatting
+    where projections_batting.pa >= 50
+) batting_scores
+{% endif %}
+
+{% if batting and pitching %}
+union
+{% endif %}
+
+{# pitching stats selection #}
+{% if pitching %}
+select
+    name,
+    {# sum all z-scores #}
+    ({% for component in pitching %}{{ component }}_z {% if not loop.last %} + {% endif %}{% endfor %}) z_sum
+from (
+    select
+        playerid, name,
+
+{% for component in pitching %}
+        ("{{ component }}" - "{{ component }}_a") / "{{ component }}_s" {{ component }}_z {% if not loop.last %},{% endif %}
+{% endfor %}
+    from projections_pitching, gpitching
+) pitching_scores
+{% endif %}
+
+) total_stats
+where z_sum is not null
+order by z_sum desc;

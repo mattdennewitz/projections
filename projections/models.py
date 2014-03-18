@@ -16,51 +16,66 @@ class Player(models.Model):
     def __unicode__(self):
         return self.name
 
+    @classmethod
+    def get_field_sort_dir(cls, field_name):
+        try:
+            return cls._meta.get_field_by_name(field_name)[0].sort_dir
+        except IndexError:
+            raise IndexError('This field could not be found')
+        except:
+            raise
+
+
+class WeightedValueField(models.FloatField):
+    def __init__(self, sort_dir=1, *a, **kw):
+        self.sort_dir = sort_dir
+        kw.update(blank=True, null=True)
+        super(WeightedValueField, self).__init__(*a, **kw)
+
 
 class Batting(Player):
-    g = models.IntegerField(blank=True, null=True)
-    pa = models.IntegerField(blank=True, null=True)
-    ab = models.IntegerField(blank=True, null=True)
-    h = models.IntegerField(blank=True, null=True)
-    hr = models.IntegerField(blank=True, null=True)
-    r = models.IntegerField(blank=True, null=True)
-    rbi = models.IntegerField(blank=True, null=True)
-    bb = models.IntegerField(blank=True, null=True)
-    so = models.IntegerField(blank=True, null=True)
-    hbp = models.IntegerField(blank=True, null=True)
-    sb = models.IntegerField(blank=True, null=True)
-    cs = models.IntegerField(blank=True, null=True)
-    avg = models.FloatField(blank=True, null=True)
-    obp = models.FloatField(blank=True, null=True)
-    slg = models.FloatField(blank=True, null=True)
-    tb = models.IntegerField(blank=True, null=True)
-    woba = models.FloatField(blank=True, null=True)
+    g = WeightedValueField(sort_dir=1, verbose_name='Games')
+    pa = WeightedValueField(sort_dir=1)
+    ab = WeightedValueField(sort_dir=1)
+    h = WeightedValueField(sort_dir=1)
+    hr = WeightedValueField(sort_dir=1)
+    r = WeightedValueField(sort_dir=1)
+    rbi = WeightedValueField(sort_dir=1)
+    bb = WeightedValueField(sort_dir=1)
+    so = WeightedValueField(sort_dir=-1)
+    hbp = WeightedValueField(sort_dir=1)
+    sb = WeightedValueField(sort_dir=1)
+    cs = WeightedValueField(sort_dir=-1)
+    avg = WeightedValueField(sort_dir=1)
+    obp = WeightedValueField(sort_dir=1)
+    slg = WeightedValueField(sort_dir=1)
+    tb = WeightedValueField(sort_dir=1)
 
     class Meta:
         verbose_name = 'Batter'
 
 
 class Pitching(Player):
-    w = models.IntegerField(blank=True, null=True)
-    l = models.IntegerField(blank=True, null=True)
-    era = models.FloatField(blank=True, null=True)
-    sv = models.IntegerField(blank=True, null=True)
-    bs = models.IntegerField(blank=True, null=True)
-    ip = models.FloatField(blank=True, null=True)
-    h = models.IntegerField(blank=True, null=True)
-    er = models.IntegerField(blank=True, null=True)
-    hra = models.IntegerField(blank=True, null=True)
-    so = models.IntegerField(blank=True, null=True)
-    bb = models.IntegerField(blank=True, null=True)
-    whip = models.FloatField(blank=True, null=True)
-    k9 = models.FloatField(blank=True, null=True)
-    bb9 = models.FloatField(blank=True, null=True)
+    w = WeightedValueField(sort_dir=1)
+    l = WeightedValueField(sort_dir=-1)
+    era = WeightedValueField(sort_dir=-1)
+    sv = WeightedValueField(sort_dir=1)
+    bs = WeightedValueField(sort_dir=-1)
+    ip = WeightedValueField(sort_dir=1)
+    h = WeightedValueField(sort_dir=1)
+    er = WeightedValueField(sort_dir=-1)
+    hra = WeightedValueField(sort_dir=-1)
+    so = WeightedValueField(sort_dir=1)
+    bb = WeightedValueField(sort_dir=-1)
+    whip = WeightedValueField(sort_dir=-1)
+    k9 = WeightedValueField(sort_dir=1)
+    bb9 = WeightedValueField(sort_dir=-1)
 
     # non-native fields
-    qs = models.IntegerField(blank=True, null=True)
-    hd = models.IntegerField(blank=True, null=True)
-    cg = models.IntegerField(blank=True, null=True)
-    sh = models.IntegerField(blank=True, null=True)
+    qs = WeightedValueField(sort_dir=1)
+    hd = WeightedValueField(sort_dir=1)
+    cg = WeightedValueField(sort_dir=1)
+    sh = WeightedValueField(sort_dir=1)
 
     class Meta:
         verbose_name = 'Pitcher'
