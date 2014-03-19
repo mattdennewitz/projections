@@ -56,6 +56,17 @@
                 {{ form.use_pts|safe }} Is this a points league?
               </label>
             </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>Min. IP</strong></p>
+                {{ form.min_ip|safe }}
+              </div>
+              <div class="col-md-6">
+                <p><strong>Min. PA</strong></p>
+                {{ form.min_pa|safe }}
+              </div>
+            </div>
           </div>
           <div class="panel-footer">
             <button type="submit" class="form-control btn btn-primary">Calculate Player Values</button>
