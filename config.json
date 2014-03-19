@@ -1,7 +1,16 @@
 {
+    "thresholds": {
+        "pitching": {
+            "ip": 20
+        },
+        "batting": {
+            "pa": 100
+        }
+    },
     "projections": [
         {
             "name": "zips",
+            "weight": 0.5,
             "types": {
                 "batting": {
                     "weight": 1,
@@ -15,6 +24,7 @@
         },
         {
             "name": "steamer",
+            "weight": 0.5,
             "types": {
                 "batting": {
                     "weight": 1,

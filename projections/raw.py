@@ -42,6 +42,7 @@ class BattingSchema(models.Model):
             + (self.HR * 4)
         )
 
+
 class PitchingSchema(models.Model):
     W = types.IntType(required=False)
     L = types.IntType(required=False)
