@@ -1,4 +1,7 @@
-django==1.6
-jingo==0.6.1
-psycopg2==2.5.2
-schematics==0.9-4
+Django==1.7.1
+Jinja2==2.7.3
+MarkupSafe==0.23
+jingo==0.7
+psycopg2==2.5.4
+schematics==1.0-0
+wsgiref==0.1.2
